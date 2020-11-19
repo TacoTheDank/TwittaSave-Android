@@ -17,10 +17,10 @@
 package com.emmanuelkehinde.twittasave.activities
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import com.emmanuelkehinde.twittasave.R
 import kotlinx.android.synthetic.main.activity_about.*
 
@@ -35,7 +35,7 @@ class AboutActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         txt_link.setOnClickListener {
-            val urlIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/emmakoko96"))
+            val urlIntent = Intent(Intent.ACTION_VIEW, "https://twitter.com/emmakoko96".toUri())
             urlIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(urlIntent)
         }

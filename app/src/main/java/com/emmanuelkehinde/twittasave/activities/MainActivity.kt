@@ -22,7 +22,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -32,6 +31,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import androidx.core.content.edit
+import androidx.core.net.toUri
 import com.emmanuelkehinde.twittasave.R
 import com.emmanuelkehinde.twittasave.receivers.AutoListenService
 import com.emmanuelkehinde.twittasave.utils.Constant
@@ -297,7 +298,7 @@ class MainActivity : AppCompatActivity() {
                 .setPositiveButton("Like") { _, _ ->
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.data =
-                        Uri.parse("http://play.google.com/store/apps/details?id=com.emmanuelkehinde.twittasave")
+                        "http://play.google.com/store/apps/details?id=com.emmanuelkehinde.twittasave".toUri()
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }
@@ -305,7 +306,7 @@ class MainActivity : AppCompatActivity() {
             val alertDialog = builder.create()
             alertDialog.show()
 
-            sharedPreferences!!.edit().putString(Constant.FIRSTRUN, "no").apply()
+            sharedPreferences!!.edit { putString(Constant.FIRSTRUN, "no") }
         }
     }
 
@@ -320,7 +321,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, AboutActivity::class.java))
         }
         if (item.itemId == R.id.web) {
-            val urlIntent = Intent(Intent.ACTION_VIEW, Uri.parse("https://twittasave.net"))
+            val urlIntent = Intent(Intent.ACTION_VIEW, "https://twittasave.net".toUri())
             urlIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(urlIntent)
         }

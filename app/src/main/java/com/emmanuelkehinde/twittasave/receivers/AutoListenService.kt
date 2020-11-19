@@ -33,6 +33,7 @@ import android.os.IBinder
 import android.provider.Settings
 import android.widget.Toast
 import androidx.core.app.NotificationCompat
+import androidx.core.content.getSystemService
 import com.emmanuelkehinde.twittasave.R
 import com.emmanuelkehinde.twittasave.activities.MainActivity
 import com.emmanuelkehinde.twittasave.utils.Constant
@@ -59,9 +60,9 @@ class AutoListenService : Service() {
 
         context = applicationContext
 
-        mClipboard = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        mClipboard = context!!.getSystemService()
         notificationManager =
-            context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            context!!.getSystemService()
         createNotificationChannel()
 
         listener = ClipboardManager.OnPrimaryClipChangedListener { performClipboardCheck() }
