@@ -54,12 +54,17 @@ class MainActivity : AppCompatActivity() {
         Fabric.with(this, Twitter(authConfig))
         setContentView(R.layout.activity_main)
 
-        sharedPreferences = this.getSharedPreferences("com.emmanuelkehinde.twittasave", Context.MODE_PRIVATE)
+        sharedPreferences =
+            this.getSharedPreferences("com.emmanuelkehinde.twittasave", Context.MODE_PRIVATE)
         swt_autolisten?.isChecked = intent.getBooleanExtra("service_on", false)
 
         if (!storageAllowed()) {
             // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(this, Constant.PERMISSIONS_STORAGE, Constant.REQUEST_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(
+                this,
+                Constant.PERMISSIONS_STORAGE,
+                Constant.REQUEST_EXTERNAL_STORAGE
+            )
         }
 
         progressDialog = ProgressDialog(this)
@@ -130,10 +135,17 @@ class MainActivity : AppCompatActivity() {
         val sharedText = intent.getStringExtra(Intent.EXTRA_TEXT)
         if (sharedText != null) {
             try {
-                if (sharedText.split("\\ ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray().size > 1) {
-                    txt_tweet_url.setText(sharedText.split("\\ ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[4])
+                if (sharedText.split("\\ ".toRegex()).dropLastWhile { it.isEmpty() }
+                        .toTypedArray().size > 1) {
+                    txt_tweet_url.setText(
+                        sharedText.split("\\ ".toRegex()).dropLastWhile { it.isEmpty() }
+                            .toTypedArray()[4]
+                    )
                 } else {
-                    txt_tweet_url?.setText(sharedText.split("\\ ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0])
+                    txt_tweet_url?.setText(
+                        sharedText.split("\\ ".toRegex()).dropLastWhile { it.isEmpty() }
+                            .toTypedArray()[0]
+                    )
                 }
             } catch (e: Exception) {
                 Log.d("TAG", "handleSharedText: $e")
@@ -180,7 +192,8 @@ class MainActivity : AppCompatActivity() {
                         while (!url.contains(".mp4")) {
                             try {
                                 if (result.data.extendedEtities.media[0].videoInfo.variants[i] != null) {
-                                    url = result.data.extendedEtities.media[0].videoInfo.variants[i].url
+                                    url =
+                                        result.data.extendedEtities.media[0].videoInfo.variants[i].url
                                     i += 1
                                 }
                             } catch (e: IndexOutOfBoundsException) {
@@ -205,20 +218,33 @@ class MainActivity : AppCompatActivity() {
         // Check if External Storage permission js allowed
         if (!storageAllowed()) {
             // We don't have permission so prompt the user
-            ActivityCompat.requestPermissions(this, Constant.PERMISSIONS_STORAGE, Constant.REQUEST_EXTERNAL_STORAGE)
+            ActivityCompat.requestPermissions(
+                this,
+                Constant.PERMISSIONS_STORAGE,
+                Constant.REQUEST_EXTERNAL_STORAGE
+            )
             progressDialog!!.hide()
-            Toast.makeText(this, "Kindly grant the request and try again", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Kindly grant the request and try again", Toast.LENGTH_SHORT)
+                .show()
         } else {
             RxDownloader.getInstance(this)
                 .download(url, fname, "video/*") // url, filename, and mimeType
                 .subscribe(
                     object : Observer<String> {
                         override fun onCompleted() {
-                            Toast.makeText(this@MainActivity, "Download Complete", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Download Complete",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         override fun onError(e: Throwable) {
-                            Toast.makeText(this@MainActivity, e.localizedMessage, Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                this@MainActivity,
+                                e.localizedMessage,
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
 
                         override fun onNext(s: String) {
@@ -233,7 +259,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun storageAllowed(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val permission = ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val permission = ActivityCompat.checkSelfPermission(
+                applicationContext,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            )
 
             return permission == PackageManager.PERMISSION_GRANTED
         }
@@ -243,7 +272,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun alertNoVideo() {
         progressDialog!!.hide()
-        Toast.makeText(this, "The url entered contains no video or gif file", Toast.LENGTH_LONG).show()
+        Toast.makeText(this, "The url entered contains no video or gif file", Toast.LENGTH_LONG)
+            .show()
     }
 
     private fun alertNoMedia() {
@@ -258,7 +288,8 @@ class MainActivity : AppCompatActivity() {
     private fun getTweetId(s: String): Long? {
         return try {
             val split = s.split("\\/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val id = split[5].split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
+            val id =
+                split[5].split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
             java.lang.Long.parseLong(id)
         } catch (e: Exception) {
             Log.d("TAG", "getTweetId: " + e.localizedMessage!!)
@@ -277,7 +308,8 @@ class MainActivity : AppCompatActivity() {
                 .setNegativeButton("Cancel") { dialogInterface, i -> dialogInterface.dismiss() }
                 .setPositiveButton("Like") { dialogInterface, i ->
                     val intent = Intent(Intent.ACTION_VIEW)
-                    intent.data = Uri.parse("http://play.google.com/store/apps/details?id=com.emmanuelkehinde.twittasave")
+                    intent.data =
+                        Uri.parse("http://play.google.com/store/apps/details?id=com.emmanuelkehinde.twittasave")
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                 }

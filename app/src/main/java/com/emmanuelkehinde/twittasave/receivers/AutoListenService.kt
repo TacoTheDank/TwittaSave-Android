@@ -60,7 +60,8 @@ class AutoListenService : Service() {
         context = applicationContext
 
         mClipboard = context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-        notificationManager = context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager =
+            context!!.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         createNotificationChannel()
 
         listener = ClipboardManager.OnPrimaryClipChangedListener { performClipboardCheck() }
@@ -70,11 +71,21 @@ class AutoListenService : Service() {
         val openActivityIntent = Intent(context, MainActivity::class.java)
         openActivityIntent.putExtra("service_on", true)
         openActivityIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val openActivityPIntent = PendingIntent.getActivity(context, Constant.AUTO_REQUEST_CODE, openActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val openActivityPIntent = PendingIntent.getActivity(
+            context,
+            Constant.AUTO_REQUEST_CODE,
+            openActivityIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val stopAutoIntent = Intent(context, StopAutoListenReceiver::class.java)
         stopAutoIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        val stopAutoPIntent = PendingIntent.getBroadcast(context, Constant.REQUEST_CODE, stopAutoIntent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val stopAutoPIntent = PendingIntent.getBroadcast(
+            context,
+            Constant.REQUEST_CODE,
+            stopAutoIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT
+        )
 
         val bitmap = BitmapFactory.decodeResource(context!!.resources, R.mipmap.ic_launcher)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {

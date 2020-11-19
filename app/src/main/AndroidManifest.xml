@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2017 Emmanuel Kehinde
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -44,7 +43,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.emmanuelkehinde.twittasave.activities.AboutActivity"/>
+        <activity android:name="com.emmanuelkehinde.twittasave.activities.AboutActivity" />
 
         <receiver
             android:name="com.emmanuelkehinde.twittasave.receivers.StopAutoListenReceiver"
@@ -52,7 +51,7 @@
 
         <service
             android:name="com.emmanuelkehinde.twittasave.receivers.AutoListenService"
-            android:exported="false"/>
+            android:exported="false" />
     </application>
 
 </manifest>

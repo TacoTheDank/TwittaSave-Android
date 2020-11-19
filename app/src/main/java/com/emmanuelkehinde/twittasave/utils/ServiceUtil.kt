@@ -63,7 +63,8 @@ object ServiceUtil {
     private fun getTweetId(s: String): Long? {
         return try {
             val split = s.split("\\/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val id = split[5].split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
+            val id =
+                split[5].split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
             java.lang.Long.parseLong(id)
         } catch (e: Exception) {
             Log.d("TAG", "getTweetId: " + e.localizedMessage!!)
@@ -119,7 +120,8 @@ object ServiceUtil {
                         while (!url.contains(".mp4")) {
                             try {
                                 if (result.data.extendedEtities.media[0].videoInfo.variants[i] != null) {
-                                    url = result.data.extendedEtities.media[0].videoInfo.variants[i].url
+                                    url =
+                                        result.data.extendedEtities.media[0].videoInfo.variants[i].url
                                     i += 1
                                 }
                             } catch (e: IndexOutOfBoundsException) {
@@ -132,7 +134,11 @@ object ServiceUtil {
                 }
 
                 override fun failure(exception: TwitterException) {
-                    Toast.makeText(c, "Request Failed: Check your internet connection", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        c,
+                        "Request Failed: Check your internet connection",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         )
@@ -143,7 +149,11 @@ object ServiceUtil {
         if (!storageAllowed()) {
             // We don't have permission so prompt the user
             // ActivityCompat.requestPermissions(c, Constant.PERMISSIONS_STORAGE, Constant.REQUEST_EXTERNAL_STORAGE);
-            Toast.makeText(c, "Kindly grant the storage permission for TwittaSave and try again", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                c,
+                "Kindly grant the storage permission for TwittaSave and try again",
+                Toast.LENGTH_SHORT
+            ).show()
         } else {
             RxDownloader.getInstance(c)
                 .download(url, fname, "video/*") // url, filename, and mimeType
@@ -172,7 +182,8 @@ object ServiceUtil {
 
     private fun storageAllowed(): Boolean {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val permission = ActivityCompat.checkSelfPermission(c!!, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val permission =
+                ActivityCompat.checkSelfPermission(c!!, Manifest.permission.WRITE_EXTERNAL_STORAGE)
 
             return permission == PackageManager.PERMISSION_GRANTED
         }

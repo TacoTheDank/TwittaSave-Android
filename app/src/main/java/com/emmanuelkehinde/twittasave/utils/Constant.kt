@@ -28,7 +28,10 @@ object Constant {
 
     // Storage Permissions
     const val REQUEST_EXTERNAL_STORAGE = 1
-    val PERMISSIONS_STORAGE = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    val PERMISSIONS_STORAGE = arrayOf(
+        Manifest.permission.READ_EXTERNAL_STORAGE,
+        Manifest.permission.WRITE_EXTERNAL_STORAGE
+    )
 
     const val FIRSTRUN = "firstrun"
     const val NOTI_IDENTIFIER = 3100
