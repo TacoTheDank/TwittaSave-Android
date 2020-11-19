@@ -71,7 +71,7 @@ dependencies {
 // Other
     implementation 'com.twitter.sdk.android:twitter-core:3.3.0'
 
-    implementation 'com.github.esafirm:RxDownloader:1.0.1'
+    implementation 'com.github.esafirm:RxDownloader:2.0.0'
 }
 
 task installGitHook(type: Copy) {

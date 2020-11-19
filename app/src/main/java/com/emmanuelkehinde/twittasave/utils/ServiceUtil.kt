@@ -29,7 +29,8 @@ import com.twitter.sdk.android.core.Result
 import com.twitter.sdk.android.core.TwitterCore
 import com.twitter.sdk.android.core.TwitterException
 import com.twitter.sdk.android.core.models.Tweet
-import rx.Observer
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 
 /**
  * Created by kehinde on 7/5/17.
@@ -155,11 +156,12 @@ object ServiceUtil {
                 Toast.LENGTH_SHORT
             ).show()
         } else {
-            RxDownloader.getInstance(c)
-                .download(url, fname, "video/*") // url, filename, and mimeType
+            val rxDownloader = RxDownloader(c!!)
+            rxDownloader
+                .download(url, fname, "video/*", true) // url, filename, and mimeType
                 .subscribe(
                     object : Observer<String> {
-                        override fun onCompleted() {
+                        override fun onComplete() {
                             Toast.makeText(c, "Download Completed", Toast.LENGTH_SHORT).show()
                         }
 
@@ -168,6 +170,9 @@ object ServiceUtil {
                         }
 
                         override fun onNext(s: String) {
+                        }
+
+                        override fun onSubscribe(d: Disposable) {
                         }
                     }
                 )

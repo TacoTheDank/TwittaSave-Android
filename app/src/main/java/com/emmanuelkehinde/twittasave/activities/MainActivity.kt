@@ -40,8 +40,9 @@ import com.emmanuelkehinde.twittasave.utils.ServiceUtil
 import com.esafirm.rxdownloader.RxDownloader
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.models.Tweet
+import io.reactivex.Observer
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.activity_main.*
-import rx.Observer
 
 class MainActivity : AppCompatActivity() {
 
@@ -226,11 +227,12 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, "Kindly grant the request and try again", Toast.LENGTH_SHORT)
                 .show()
         } else {
-            RxDownloader.getInstance(this)
-                .download(url, fname, "video/*") // url, filename, and mimeType
+            val rxDownloader = RxDownloader(this)
+            rxDownloader
+                .download(url, fname, "video/*", true) // url, filename, and mimeType
                 .subscribe(
                     object : Observer<String> {
-                        override fun onCompleted() {
+                        override fun onComplete() {
                             Toast.makeText(
                                 this@MainActivity,
                                 "Download Complete",
@@ -247,6 +249,9 @@ class MainActivity : AppCompatActivity() {
                         }
 
                         override fun onNext(s: String) {
+                        }
+
+                        override fun onSubscribe(d: Disposable) {
                         }
                     }
                 )
