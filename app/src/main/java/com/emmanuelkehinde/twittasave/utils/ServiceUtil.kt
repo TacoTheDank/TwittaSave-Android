@@ -60,9 +60,9 @@ object ServiceUtil {
         }
     }
 
-    private fun getTweetId(s: String): Long? {
+    fun getTweetId(s: String): Long? {
         return try {
-            val split = s.split("\\/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+            val split = s.split("/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
             val id =
                 split[5].split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
             java.lang.Long.parseLong(id)

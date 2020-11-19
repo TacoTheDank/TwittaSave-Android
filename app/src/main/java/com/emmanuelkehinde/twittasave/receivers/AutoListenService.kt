@@ -50,7 +50,7 @@ class AutoListenService : Service() {
     private var context: Context? = null
     private var notificationManager: NotificationManager? = null
     private var vNotification: Notification? = null
-    private var vNotification1: androidx.core.app.NotificationCompat.Builder? = null
+    private var vNotification1: NotificationCompat.Builder? = null
     private var mClipboard: ClipboardManager? = null
     private var listener: ClipboardManager.OnPrimaryClipChangedListener? = null
 

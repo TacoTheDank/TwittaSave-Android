@@ -35,6 +35,7 @@ import androidx.core.app.ActivityCompat
 import com.emmanuelkehinde.twittasave.R
 import com.emmanuelkehinde.twittasave.receivers.AutoListenService
 import com.emmanuelkehinde.twittasave.utils.Constant
+import com.emmanuelkehinde.twittasave.utils.ServiceUtil
 import com.esafirm.rxdownloader.RxDownloader
 import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.*
@@ -93,7 +94,7 @@ class MainActivity : AppCompatActivity() {
             // Check if the tweet url field has text containing twitter.com/...
             if (tweetUrl.isNotEmpty() && tweetUrl.contains("twitter.com/")) {
 
-                val id = getTweetId(tweetUrl)
+                val id = ServiceUtil.getTweetId(tweetUrl)
 
                 // Check if filename is set. If not, set the tweet Id as the filename
                 fname = if (txt_filename?.text.toString().isNotEmpty()) {
@@ -113,7 +114,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun handleAutoListen() {
-        swt_autolisten?.setOnCheckedChangeListener { buttonView, isChecked ->
+        swt_autolisten?.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 startAutoService()
             } else {
@@ -181,10 +182,10 @@ class MainActivity : AppCompatActivity() {
                         var url: String
 
                         // Set filename to gif or mp4
-                        if (result.data.extendedEtities.media[0].type == "video") {
-                            filename = "$filename.mp4"
+                        filename = if (result.data.extendedEtities.media[0].type == "video") {
+                            "$filename.mp4"
                         } else {
-                            filename = "$filename.gif"
+                            "$filename.gif"
                         }
 
                         var i = 0
@@ -285,19 +286,6 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this@MainActivity, "Enter a correct tweet url", Toast.LENGTH_LONG).show()
     }
 
-    private fun getTweetId(s: String): Long? {
-        return try {
-            val split = s.split("\\/".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            val id =
-                split[5].split("\\?".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()[0]
-            java.lang.Long.parseLong(id)
-        } catch (e: Exception) {
-            Log.d("TAG", "getTweetId: " + e.localizedMessage!!)
-            alertNoUrl()
-            null
-        }
-    }
-
     // Shows this only the first time
     private fun loadLikeDialog() {
         if (sharedPreferences!!.getString(Constant.FIRSTRUN, "") == "") {
@@ -305,8 +293,8 @@ class MainActivity : AppCompatActivity() {
             val builder = AlertDialog.Builder(this)
                 .setCancelable(true)
                 .setView(R.layout.like_layout)
-                .setNegativeButton("Cancel") { dialogInterface, i -> dialogInterface.dismiss() }
-                .setPositiveButton("Like") { dialogInterface, i ->
+                .setNegativeButton("Cancel") { dialogInterface, _ -> dialogInterface.dismiss() }
+                .setPositiveButton("Like") { _, _ ->
                     val intent = Intent(Intent.ACTION_VIEW)
                     intent.data =
                         Uri.parse("http://play.google.com/store/apps/details?id=com.emmanuelkehinde.twittasave")
