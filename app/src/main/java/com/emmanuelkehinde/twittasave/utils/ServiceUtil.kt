@@ -100,28 +100,28 @@ object ServiceUtil {
                 override fun success(result: Result<Tweet>) {
 
                     // Check if media is present
-                    if (result.data.extendedEtities == null && result.data.entities.media == null) {
+                    if (result.data.extendedEntities == null && result.data.entities.media == null) {
                         alertNoMedia()
-                    } else if (result.data.extendedEtities.media[0].type != "video" && result.data.extendedEtities.media[0].type != "animated_gif") {
+                    } else if (result.data.extendedEntities.media[0].type != "video" && result.data.extendedEntities.media[0].type != "animated_gif") {
                         alertNoVideo()
                     } else {
                         var filename = fname
                         var url: String
 
                         // Set filename to gif or mp4
-                        filename = if (result.data.extendedEtities.media[0].type == "video") {
+                        filename = if (result.data.extendedEntities.media[0].type == "video") {
                             "$filename.mp4"
                         } else {
                             "$filename.gif"
                         }
 
                         var i = 0
-                        url = result.data.extendedEtities.media[0].videoInfo.variants[i].url
+                        url = result.data.extendedEntities.media[0].videoInfo.variants[i].url
                         while (!url.contains(".mp4")) {
                             try {
-                                if (result.data.extendedEtities.media[0].videoInfo.variants[i] != null) {
+                                if (result.data.extendedEntities.media[0].videoInfo.variants[i] != null) {
                                     url =
-                                        result.data.extendedEtities.media[0].videoInfo.variants[i].url
+                                        result.data.extendedEntities.media[0].videoInfo.variants[i].url
                                     i += 1
                                 }
                             } catch (e: IndexOutOfBoundsException) {

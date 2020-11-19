@@ -38,10 +38,8 @@ import com.emmanuelkehinde.twittasave.receivers.AutoListenService
 import com.emmanuelkehinde.twittasave.utils.Constant
 import com.emmanuelkehinde.twittasave.utils.ServiceUtil
 import com.esafirm.rxdownloader.RxDownloader
-import com.twitter.sdk.android.Twitter
 import com.twitter.sdk.android.core.*
 import com.twitter.sdk.android.core.models.Tweet
-import io.fabric.sdk.android.Fabric
 import kotlinx.android.synthetic.main.activity_main.*
 import rx.Observer
 
@@ -52,8 +50,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val authConfig = TwitterAuthConfig(Constant.TWITTER_KEY, Constant.TWITTER_SECRET)
-        Fabric.with(this, Twitter(authConfig))
+        Twitter.initialize(this)
         setContentView(R.layout.activity_main)
 
         sharedPreferences =
@@ -174,28 +171,28 @@ class MainActivity : AppCompatActivity() {
 
                 override fun success(result: Result<Tweet>) {
                     // Check if media is present
-                    if (result.data.extendedEtities == null && result.data.entities.media == null) {
+                    if (result.data.extendedEntities == null && result.data.entities.media == null) {
                         alertNoMedia()
-                    } else if (result.data.extendedEtities.media[0].type != "video" && result.data.extendedEtities.media[0].type != "animated_gif") {
+                    } else if (result.data.extendedEntities.media[0].type != "video" && result.data.extendedEntities.media[0].type != "animated_gif") {
                         alertNoVideo()
                     } else {
                         var filename = fname
                         var url: String
 
                         // Set filename to gif or mp4
-                        filename = if (result.data.extendedEtities.media[0].type == "video") {
+                        filename = if (result.data.extendedEntities.media[0].type == "video") {
                             "$filename.mp4"
                         } else {
                             "$filename.gif"
                         }
 
                         var i = 0
-                        url = result.data.extendedEtities.media[0].videoInfo.variants[i].url
+                        url = result.data.extendedEntities.media[0].videoInfo.variants[i].url
                         while (!url.contains(".mp4")) {
                             try {
-                                if (result.data.extendedEtities.media[0].videoInfo.variants[i] != null) {
+                                if (result.data.extendedEntities.media[0].videoInfo.variants[i] != null) {
                                     url =
-                                        result.data.extendedEtities.media[0].videoInfo.variants[i].url
+                                        result.data.extendedEntities.media[0].videoInfo.variants[i].url
                                     i += 1
                                 }
                             } catch (e: IndexOutOfBoundsException) {
