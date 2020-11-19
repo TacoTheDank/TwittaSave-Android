@@ -3,12 +3,15 @@
 
 # TwittaSave
 
-## Download Twitter Videos and Gifs directly to your android device. 
+## Download Twitter Videos and Gifs directly to your android device.
 
 ### [Download the latest APK here](https://github.com/emmanuelkehinde/TwittaSave-Android/releases/download/v3.0/twittasave-release.apk)
 
 </br></br>
-<img src=https://raw.githubusercontent.com/emmanuelkehinde/TwittaSave-Android/master/screenshots/home.jpg alt="Twittasave Home" width=300 height=580/> <img src=https://raw.githubusercontent.com/emmanuelkehinde/TwittaSave-Android/master/screenshots/about.jpg alt="Twittasave About" width=300 height=580/>
+<img src=https://raw.githubusercontent.com/emmanuelkehinde/TwittaSave-Android/master/screenshots/home.jpg
+    alt="Twittasave Home" width=300 height=580/>
+<img src=https://raw.githubusercontent.com/emmanuelkehinde/TwittaSave-Android/master/screenshots/about.jpg
+    alt="Twittasave About" width=300 height=580/>
 
 ### How to use
 - Copy the tweet url, paste it and tap the download button.
@@ -27,7 +30,10 @@
 - Push to your origin repository.
 - Create a new PR (Pull Request) in GitHub.
 
-### Love this work? Show your love :heart: by putting a :star: on this project :v:; or you can buy me a coffee <a href='https://ko-fi.com/P5P0GMV2' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+### Love this work? Show your love :heart: by putting a :star: on this project :v:; or you can buy me a coffee
+<a href='https://ko-fi.com/P5P0GMV2' target='_blank'><img height='36' style='border:0px;height:36px;'
+    src='https://az743702.vo.msecnd.net/cdn/kofi2.png?v=0' border='0' alt='Buy Me a Coffee at ko-fi.com' />
+</a>
 
 ### License
 ```
